@@ -24,5 +24,4 @@ mf = open("SumStopLi.txt","w+")
 for i in range(0, len(a) - 1, 1): 
     # se divide entre 10 y queda igual
     mf.write(str(i/10) + '\t' + str(tresult[i]))
-
 mf.close()
