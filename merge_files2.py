@@ -1,33 +1,28 @@
-f1=open("PlasStopLi.txt","r")
-lines=f1.readlines()
-result=[]
-mf = open("SumStopLi.txt","w+")
+def get_values_from_file(path):
+    f = open(path, "r")
+    result = []
+    for i in f.readlines():
+        # hay 3 tipos de separaciones diferentes: 1, 2 y 4 espacios
+        value = i.strip().replace(",", ".").replace("  ", " ").replace("    ", " ").split(" ")[1]
+        # tras la transformacion se comprueba que no haya vacios
+        if value != "":
+            result.append(value)
+    f.close()
+    return result
 
-for i in lines:
-    if not i=='':
-        result.append(i.strip().replace('  ',' ').split(' ')[1])
+# se recogen los valores de los ficheros
+a = get_values_from_file("PlasStopLi.txt")
+b = get_values_from_file("PlasStopLi2.txt")
 
-f1.close()
-
-f2 = open("PlasStopLi2.txt","r")
-lines=f2.readlines()
-result2=[]
-
-for j in lines:
-    if not j=='':
-        result2.append(j.strip().replace('  ',' ').split(' ')[1])
-
-f2.close()
 tresult = []
+# suponiendo que los dos ficheros tienen las mismas lineas (se ha cogido la longitud de a)
+for i in range(0, len(a) - 1 , 1): 
+    tresult.append(float(a[i]) + float(b[i]))
 
-for i in range(49):
-    try:
-        if not i=='':
-            tresult[i]=float(result[i])+float(result2[i])
-    except:
-        print("result 1: " + result[i] + " result 2: " + result2[i])
-
-for i in range(0,5.1,0.1):
-    mf.write(str(i) + '\t' + str(tresult[i]))
+mf = open("SumStopLi.txt","w+")
+# range no acepta float
+for i in range(0, len(a) - 1, 1): 
+    # se divide entre 10 y queda igual
+    mf.write(str(i/10) + '\t' + str(tresult[i]))
 
 mf.close()
